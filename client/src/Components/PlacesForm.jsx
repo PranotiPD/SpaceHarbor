@@ -25,7 +25,6 @@ function PlacesForm(){
         } else {
             axios.get('/places/'+id).then(response => {
                 const {data} = response;
-                console.log('1', data);
                 setTitle(data.title);
                 setAddress(data.address);
                 setPerks(data.perks);
@@ -35,6 +34,8 @@ function PlacesForm(){
                 setExtraInfo(data.extraInfo);
                 setMaxGuests(data.maxGuests);
                 setAddedPhotos(data.photos);
+                console.log('pics', data.photos)
+                console.log(data, 'data');
             })
         }
     },[id])

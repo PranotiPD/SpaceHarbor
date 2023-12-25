@@ -136,7 +136,7 @@ app.get('/places/:id', async (req,res) => {
 
 app.put('/places/', async (req, res) => {
     const {token} = req.cookies;
-    const {id, title,address,photos:addedPhotos,description,
+    const {id, title,address,addedPhotos,description,
       perks,extraInfo,checkIn,checkOut,maxGuests} = req.body;
       
       jwt.verify(token, jwtSecret, {}, async (err, userData) => {
