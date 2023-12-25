@@ -11,16 +11,25 @@ function LoginPage() {
     const { setUser } = useContext(UserContext);
     async function submit(e) {
         e.preventDefault();
+        if(email === '' || password === '') {
+            alert('Fields can not be empty enter values.')
+            return;
+        }
+        console.log(email)
         try {
             const {data} = await axios.post('/login', {
                 email,
                 password
             }) 
-            setUser(data);
-            alert('Login successful');
-            setRedirect(true)
+            if(data) {
+                setUser(data);
+                alert('Login successful');
+                setRedirect(true);
+            } else {
+                alert('Enter credentials correctly')
+            }
         } catch(e){
-            alert('Invalid credentials')
+            alert('Invalid username or password')
         }
     }
 

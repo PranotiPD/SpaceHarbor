@@ -18,6 +18,7 @@ function PlacesForm(){
     const [checkOut, setCheckOut] = useState('');
     const [maxGuests, setMaxGuests] = useState(1);
     const [redirect, setRedirect] = useState(false);
+    const [price, setPrice] = useState(100);
 
     useEffect(() => {
         if(!id){
@@ -34,8 +35,7 @@ function PlacesForm(){
                 setExtraInfo(data.extraInfo);
                 setMaxGuests(data.maxGuests);
                 setAddedPhotos(data.photos);
-                console.log('pics', data.photos)
-                console.log(data, 'data');
+                setPrice(data.price);
             })
         }
     },[id])
@@ -63,8 +63,12 @@ function PlacesForm(){
 
     function savePlace(e) {
         e.preventDefault();
+        if(addedPhotos.length < 2){
+            alert('Insert atleast two picture');
+            return;
+        }
         const placeData = {title, address, description, addedPhotos,
-            perks, extraInfo, checkIn, checkOut, maxGuests}
+            perks, extraInfo, checkIn, checkOut, maxGuests, price}
         if(id){
             //update
             axios.put('/places', {
@@ -87,30 +91,34 @@ function PlacesForm(){
                         <AccountNav />
                         <form onSubmit={savePlace}>
                             {preInput('Title','Title for your place. recommended to have to short and catchy')}
-                            <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="title, for example: My lovely aparment"/>
+                            <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="title, for example: My lovely aparment" required/>
                             {preInput('Address', 'Address to this place')}
-                            <input type="text" value={address} onChange={e => setAddress(e.target.value)} placeholder="address"/>
+                            <input type="text" value={address} onChange={e => setAddress(e.target.value)} placeholder="address" required/>
                             {preInput('Photos', 'More is better')}
                             <PhotosUploader addedPhotos={addedPhotos} onChange={setAddedPhotos}/>
                             {preInput('Description', 'Add description of place')}
-                            <textarea value={description} onChange={e => setDescription(e.target.value)} className="border w-full rounded-xl" />
+                            <textarea value={description} onChange={e => setDescription(e.target.value)} className="border w-full rounded-xl" required/>
                             {preInput('Perks', 'Select checkboxes of all the perks you are offering')}
                             <Perks selected={perks} onChange={setPerks}/>
                             {preInput('Extra info', 'House rules etc')}
-                            <textarea value={extraInfo} onChange={e => setExtraInfo(e.target.value)} className="border w-full rounded-xl" />
+                            <textarea value={extraInfo} onChange={e => setExtraInfo(e.target.value)} className="border w-full rounded-xl" required/>
                             {preInput('Check in&out times, max guests', 'Add check in and out times')}
-                            <div className="grid grid-cols-3 items-center gap-2">   
+                            <div className="grid grid-cols-2 md:grid-cols-4 items-center gap-2">   
                                 <div>
                                     <h3 className="mt-2 mb-1">Check in time</h3>
-                                    <input type="text" value={checkIn} onChange={e => setCheckIn(e.target.value)} placeholder="14" />
+                                    <input type="text" value={checkIn} onChange={e => setCheckIn(e.target.value)} placeholder="14" required/>
                                 </div>
                                 <div>
                                     <h3 className="mt-2 mb-1">Check out time</h3>
-                                    <input type="text" placeholder="11" value={checkOut} onChange={e => setCheckOut(e.target.value)} />
+                                    <input type="text" placeholder="11" value={checkOut} onChange={e => setCheckOut(e.target.value)} required/>
                                 </div>
                                 <div>
                                     <h3 className="mt-2 mb-1">Max guests</h3>
                                     <input min={1} type="number" placeholder="enter number" value={maxGuests} onChange={e => setMaxGuests(e.target.value)}/>
+                                </div>
+                                <div>
+                                    <h3 className="mt-2 mb-1">Price per night</h3>
+                                    <input min={1} type="number" placeholder="enter number" value={price} onChange={e => setPrice(e.target.value)} required/>
                                 </div>
                             </div>
                             <button className="primary my-4">Save</button>

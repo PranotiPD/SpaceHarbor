@@ -46,20 +46,16 @@ app.post('/register', async (req, res) => {
 app.post('/login',async (req, res) => {
     const { email, password } = req.body;
     const userDoc = await User.findOne({email})
-    if(userDoc){
-        const passOk = bcrypt.compareSync(password, userDoc.password)
-        if(passOk){
-            jwt.sign({email:userDoc.email, id:userDoc._id}, jwtSecret, {}, (err, token) => {
-                if(err) throw err;
-                res.cookie('token', token).json(userDoc)
-            })
-        } else {
-            res.json('password not ok')
-        }
-    } else {
-        res.json('not found')
+    const passOk = bcrypt.compareSync(password, userDoc.password)
+    if(email === userDoc.email && passOk){
+        jwt.sign({email:userDoc.email, id:userDoc._id}, jwtSecret, {}, (err, token) => {
+            if(err) throw err;
+            res.cookie('token', token).json(userDoc)
+        })
     }
-
+    else {
+        res.status(404).json('not ok');
+    }
 } )
 
 app.get('/profile', (req, res) => {
@@ -114,13 +110,13 @@ app.post('/places', (req,res) => {
     const placeDoc = await Place.create({
       owner:userData.id,price,
       title,address,photos:addedPhotos,description,
-      perks,extraInfo,checkIn,checkOut,maxGuests,
+      perks,extraInfo,checkIn,checkOut,maxGuests
     });
     res.json(placeDoc);
   });
 })
 
-app.get('/places', async (req,res) => {
+app.get('/user-places', async (req,res) => {
     const {token} = req.cookies;
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
         const {id} = userData;
@@ -130,14 +126,13 @@ app.get('/places', async (req,res) => {
 
 app.get('/places/:id', async (req,res) => {
     const {id} = req.params;
-    console.log(id,'id');
     res.json(await Place.findById(id))
 })
 
 app.put('/places/', async (req, res) => {
     const {token} = req.cookies;
     const {id, title,address,addedPhotos,description,
-      perks,extraInfo,checkIn,checkOut,maxGuests} = req.body;
+      perks,extraInfo,checkIn,checkOut,maxGuests,price} = req.body;
       
       jwt.verify(token, jwtSecret, {}, async (err, userData) => {
         if(err) throw err
@@ -145,12 +140,22 @@ app.put('/places/', async (req, res) => {
         if(userData.id === placeDoc.owner.toString()){
             placeDoc.set({
                 title,address,photos:addedPhotos,description,
-      perks,extraInfo,checkIn,checkOut,maxGuests
+      perks,extraInfo,checkIn,checkOut,maxGuests,price
             });
             await placeDoc.save();
             res.json('ok');
         }
       });
+})
 
+app.get('/places', async (req, res) => {
+    res.json(await Place.find());
+});
+
+app.post('/delete-place', async (req, res) => {
+    const {id} = req.body;
+    console.log(id, 'idddddddd');
+    const placeDoc = await Place.findById(id);
+    res.json(await Place.deleteOne({_id : placeDoc._id}));
 })
 app.listen(4000);

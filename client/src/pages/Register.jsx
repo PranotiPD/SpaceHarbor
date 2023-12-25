@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useState } from "react";
 import axios from 'axios';
 
@@ -6,9 +6,14 @@ function Register(){
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [redirect, setRedirect] = useState(false);
 
     async function submit(e) {
         e.preventDefault();
+        if(name === '' || email === '' || password === ''){
+            alert('Fields can not be empty enter values');
+            return;
+        }
         try {
             await axios.post('/register', {
                 name,
@@ -16,9 +21,14 @@ function Register(){
                 password
             })
             alert('Registration successful. Now you can log in')
+            setRedirect(true);
         } catch(e) {
-            alert('Registration failed. Please try again later')
+            alert('Registration failed. Please try again later');
         }
+    }
+
+    if(redirect){
+        return <Navigate to={'/login'} />
     }
 
     return(
