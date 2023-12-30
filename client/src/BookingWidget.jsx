@@ -73,9 +73,9 @@ function BookingWidget({place}) {
                         </div>
                         </div>
                         <button className="primary mt-3" onClick={bookPlace}>
-                            Book this place for 
+                            Book this place  
                             {numberOfNights > 0 && (
-                                <span className="font-bold"> ${numberOfNights * place.price}</span>
+                                <span><span> for</span> <span className="font-bold"> ${numberOfNights * place.price}</span></span>
                             )}
                         </button>
                     </div>
