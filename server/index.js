@@ -5,6 +5,7 @@ const cors = require('cors'); // accessing back from front different ips
 require('dotenv').config();
 const User = require('./models/User');
 const Place = require('./models/Place');
+const Booking = require('./models/Booking');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
@@ -157,5 +158,34 @@ app.post('/delete-place', async (req, res) => {
     console.log(id, 'idddddddd');
     const placeDoc = await Place.findById(id);
     res.json(await Place.deleteOne({_id : placeDoc._id}));
+})
+
+app.post('/bookings',async (req, res) => {
+    const userData = await getUserDataFromReq(req);
+    const {
+        place, checkIn, checkOut, numberOfGuests, name, 
+        phone, price
+    } = req.body;
+    Booking.create({
+        place, checkIn, checkOut, numberOfGuests, name, 
+        phone, price, user: userData.id
+    }).then(( doc) => {
+        res.status(200).json(doc);
+    }).catch((err) => {
+        throw err;
+    })
+});
+
+function getUserDataFromReq(req) {
+    return new Promise((resolve, reject) => {
+        jwt.verify(req.cookies.token, jwtSecret, {}, async (err, userData) => {
+            if(err) throw err;
+            resolve(userData);
+        });
+    })
+}
+app.get('/bookings', async (req, res) => {
+   const userData = await getUserDataFromReq(req);
+    res.json(await Booking.find({user: userData.id}).populate('place')) // populate will give us whole place object
 })
 app.listen(4000);
