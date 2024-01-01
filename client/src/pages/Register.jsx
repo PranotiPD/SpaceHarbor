@@ -32,7 +32,7 @@ function Register(){
     }
 
     return(
-        <div className="mt-4 grow flex items-center justify-around">
+        <div className="mt-4 grow flex items-center justify-around h-20">
             <div className="mb-64">
             <h1 className="text-4xl text-center mb-4">Register</h1>
             <form className="max-w-md mx-auto" onSubmit={submit}>
@@ -44,7 +44,7 @@ function Register(){
                         value={password} onChange={e => setPassword(e.target.value)}/>
                 <button className="primary">Register</button>
                 <div className="text-center py-2 text-gray-500">
-                    Already have an account ? <Link to='/login' className="underline text-black">login</Link>
+                    Already have an account ? <Link to='/login' className="underline">login</Link>
                 </div>
             </form>
             </div>

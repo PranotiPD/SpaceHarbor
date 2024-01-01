@@ -28,7 +28,7 @@ function BookingPage() {
         <div className="mt-4 -mx-8 px-8 py-2">
             <h1 className="text-3xl font-bold">{booking.place.title}</h1>
             <Address place={booking.place}/>
-            <div className="bg-gray-100 my-4 p-4 flex rounded-2xl justify-between">
+            <div className="bg-gray-400 my-4 p-4 flex rounded-2xl justify-between">
                 <div>
                     <h2 className="text-2xl">Your booking information:</h2>
                     <BookingDates booking={booking} className='flex items-center gap-4'/>

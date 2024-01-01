@@ -52,7 +52,7 @@ function LoginPage() {
                         onChange={e=> setPassword(e.target.value)}/>
                 <button className="primary">Login</button>
                 <div className="text-center py-2 text-gray-500">
-                    Dont have acoount yet? <Link to='/register' className="underline text-black">Register now</Link>
+                    Dont have acoount yet? <Link to='/register' className="underline">Register now</Link>
                 </div>
             </form>
             </div>

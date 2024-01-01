@@ -26,14 +26,14 @@ function BookingsPage() {
         <div>
             <AccountNav />
             <div>{bookings?.length > 0 && bookings.map(booking => (
-                <div onClick={() => openBookingPage(booking._id)} key={booking} className="flex gap-4 bg-gray-200 cursor-pointer rounded-2xl overflow-hidden">
+                <div onClick={() => openBookingPage(booking._id)} key={booking} className="flex gap-4 bg-gray-400 border-gray-50 mb-6 cursor-pointer rounded-2xl overflow-hidden">
                     <div className="w-48">
                         {booking.place?.photos?.length > 0 && (
                                 <img className=" h-full" src={'http://localhost:4000/uploads/'+booking.place.photos?.[0]} alt=""></img>
                         )}
                     </div>
                     <div className="py-3 pr-3 grow">
-                        <h2 className="text-xl">{booking.place.title}</h2>
+                        <h2 className="text-xl">{booking.place?.title}</h2>
                         <BookingDates booking={booking}/>
                         <div className="flex gap-2 font-bold">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">

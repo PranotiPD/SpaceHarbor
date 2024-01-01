@@ -83,7 +83,7 @@ function BookingWidget({place}) {
 }
 
 BookingWidget.propTypes = {
-    place: PropTypes.string
+    place: PropTypes.object
 }
 
 export default BookingWidget;

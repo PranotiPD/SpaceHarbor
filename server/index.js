@@ -6,6 +6,7 @@ require('dotenv').config();
 const User = require('./models/User');
 const Place = require('./models/Place');
 const Booking = require('./models/Booking');
+const Wishlist = require('./models/Wishlist');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
@@ -155,7 +156,6 @@ app.get('/places', async (req, res) => {
 
 app.post('/delete-place', async (req, res) => {
     const {id} = req.body;
-    console.log(id, 'idddddddd');
     const placeDoc = await Place.findById(id);
     res.json(await Place.deleteOne({_id : placeDoc._id}));
 })
@@ -187,5 +187,47 @@ function getUserDataFromReq(req) {
 app.get('/bookings', async (req, res) => {
    const userData = await getUserDataFromReq(req);
     res.json(await Booking.find({user: userData.id}).populate('place')) // populate will give us whole place object
+})
+
+app.post('/wishlist', async (req, res) => {
+    const userData = await getUserDataFromReq(req);
+    const {place} = req.body;
+    const isItemPresent = await Wishlist.find({place : place})
+    console.log('isItemPresenttttttttttt', isItemPresent)
+    if(isItemPresent.length > 0){
+        for(let i=0; i<isItemPresent.length; i++){
+            if(userData.id === isItemPresent[i].user){
+                return;
+            }
+        }
+    }
+    Wishlist.create({
+        user: userData.id, place
+    }).then(( doc) => {
+        res.status(200).json(doc);
+    }).catch((err) => {
+        throw err;
+    })
+})
+
+app.post('/remove-from-wishlist', async (req, res) => {
+    const {wishId} = req.body;
+    await Wishlist.findById(wishId);
+    res.status(200).json(await Wishlist.deleteOne({_id : wishId}));
+})
+
+app.post('/remove-place-from-wishlist', async (req, res) => {
+    const {id} = req.body;
+    const places = await Wishlist.find({place: id});
+    if(places){
+        for(let i=0; i<places.length; i++){
+            await Wishlist.deleteOne({_id : places[i]?._id})
+        }
+    }
+})
+
+app.get('/wishlist',async (req, res) => {
+    const userData = await getUserDataFromReq(req);
+    res.json(await Wishlist.find({user: userData.id}).populate('place'))
 })
 app.listen(4000);

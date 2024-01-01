@@ -12,6 +12,7 @@ import PlacesForm from './Components/PlacesForm';
 import PlacePage from './pages/PlacePage.jsx';
 import BookingPage from './pages/BookingPage.jsx';
 import BookingsPage from './pages/BookingsPage.jsx';
+import WishlistPage from './pages/WishlistPage.jsx';
 
 axios.defaults.baseURL='http://127.0.0.1:4000'
 axios.defaults.withCredentials = true;
@@ -32,6 +33,7 @@ function App() {
           <Route path='/place/:id' element={<PlacePage />}/>
           <Route path='/account/bookings' element={<BookingsPage />} />
           <Route path='/account/bookings/:id' element={<BookingPage />} />
+          <Route path='/account/wishlist' element={<WishlistPage />} />
         </Route>
       </Routes>
     </UserContextProvider>
