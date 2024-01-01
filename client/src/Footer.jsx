@@ -6,7 +6,7 @@ function Footer({textColor, bgcolor}) {
         <footer className={`mt-auto bg-${bgcolor}-600 border-t-2 min-w-screen px-8 py-4 -mx-8 text-${textColor}-200`}>
             <div className="flex justify-between min-w-screen items-center">
                 <div className={`flex gap-2 cursor-pointer items-center text-${textColor}-200`}>
-                    <a>2023@Airbnb,Inc</a>
+                    <a>2023@SpaceHarbor,Inc</a>
                     <p>.</p>
                     <a>Privacy</a>
                     <p>.</p>
