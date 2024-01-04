@@ -28,7 +28,7 @@ function WishlistPage() {
                 <div key={item._id} className="bg-gray-400 w-60 rounded-2xl overflow-hidden cursor-pointer" onClick={() => setRedirect('/place/'+item.place._id)}>
                     <div className="w-60" >
                         {item.place?.photos?.length > 0 && (
-                                <img className=" h-full " src={'http://localhost:4000/uploads/'+item.place.photos?.[0]} alt=""></img>
+                                <img className=" h-full " src={'https://spaceharbor-backend.vercel.app/uploads/'+item.place.photos?.[0]} alt=""></img>
                         )}
                     </div>
                     <h2 className="font-semibold text-center">{item.place?.title}</h2>

@@ -14,7 +14,7 @@ import BookingPage from './pages/BookingPage.jsx';
 import BookingsPage from './pages/BookingsPage.jsx';
 import WishlistPage from './pages/WishlistPage.jsx';
 
-axios.defaults.baseURL='https://spaceharbor-backend.vercel.app/'
+axios.defaults.baseURL='https://spaceharbor-backend.vercel.app'
 axios.defaults.withCredentials = true;
 function App() {
 
