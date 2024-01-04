@@ -29,7 +29,7 @@ function BookingsPage() {
                 <div onClick={() => openBookingPage(booking._id)} key={booking} className="flex gap-4 bg-gray-400 border-gray-50 mb-6 cursor-pointer rounded-2xl overflow-hidden">
                     <div className="w-48">
                         {booking.place?.photos?.length > 0 && (
-                                <img className=" h-full" src={'http://localhost:4000/uploads/'+booking.place.photos?.[0]} alt=""></img>
+                                <img className=" h-full" src={'https://spaceharbor-backend.vercel.app/uploads/'+booking.place.photos?.[0]} alt=""></img>
                         )}
                     </div>
                     <div className="py-3 pr-3 grow">

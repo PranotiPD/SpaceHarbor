@@ -34,7 +34,7 @@ function PlacesPage() {
                     <Link to={'/account/places/'+place._id}  className="flex gap-4 cursor-pointer ">
                     <div className="flex w-32 h-32 bg-gray-300 shrink-0 rounded-2xl">
                         {place.photos.length > 0 && (
-                            <img className="aspect-sqaure object-fill rounded-2xl" src={'http://localhost:4000/uploads/'+place.photos?.[0]} alt=""></img>
+                            <img className="aspect-sqaure object-fill rounded-2xl" src={'https://spaceharbor-backend.vercel.app/uploads/'+place.photos?.[0]} alt=""></img>
                         )}
                     </div>
                     <div className="relative">

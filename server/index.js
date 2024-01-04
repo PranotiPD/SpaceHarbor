@@ -22,7 +22,7 @@ app.use(cookieParser())
 app.use('/uploads', express.static(__dirname+'/uploads'))
 app.use(cors({
     credentials: true,
-    origin: 'http://127.0.0.1:5173'
+    origin: process.env.API_KEY
 }))
 
 mongoose.connect(process.env.MONGO_URL)

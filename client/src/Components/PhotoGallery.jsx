@@ -16,7 +16,7 @@ function PhotoGallery({place}) {
             </button>
             <div className="grid grid-cols-3 grid-row-((place?.photos?.length)/2) px-14 py-14 gap-4 ">
                 {place?.photos?.length > 0 && place.photos.map((pic) => (
-                    <img key={pic} src={'http://localhost:4000/uploads/'+pic} alt="" className="rounded-2xl aspect-square object-cover" />
+                    <img key={pic} src={'https://spaceharbor-backend.vercel.app/uploads/'+pic} alt="" className="rounded-2xl aspect-square object-cover" />
                 ))}
             </div>
         </div>
@@ -28,13 +28,13 @@ function PhotoGallery({place}) {
                 <div>
                     {place.photos?.[0] && (
                         <div >
-                            <img className="object-cover rounded-2xl" src={"http://localhost:4000/uploads/"+place.photos?.[0]}/>
+                            <img className="object-cover rounded-2xl" src={"https://spaceharbor-backend.vercel.app/uploads/"+place.photos?.[0]}/>
                         </div>
                     )}
                 </div>
                 <div>
                     {place.photos?.[1] && (
-                        <img className=" object-cover rounded-2xl" src={"http://localhost:4000/uploads/"+place.photos?.[1]}/>
+                        <img className=" object-cover rounded-2xl" src={"https://spaceharbor-backend.vercel.app/uploads/"+place.photos?.[1]}/>
                     )}
                 </div>
             </div>
